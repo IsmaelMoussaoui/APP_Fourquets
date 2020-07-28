@@ -40,6 +40,7 @@ class _MyStatefulWidgetState extends State<NewProduct>
   @override
   Widget build(BuildContext context) {
     return Form(
+      child: SingleChildScrollView(
       key: _formKey,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -170,6 +171,7 @@ class _MyStatefulWidgetState extends State<NewProduct>
           ),
         ],
       ),
-    );
+    )
+  );
   }
 }
