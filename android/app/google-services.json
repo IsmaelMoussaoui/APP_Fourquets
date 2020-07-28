@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "820398325664",
+    "firebase_url": "https://boulangerie-7f11e.firebaseio.com",
+    "project_id": "boulangerie-7f11e",
+    "storage_bucket": "boulangerie-7f11e.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:820398325664:android:9f878fa844a2e3b243aec5",
+        "android_client_info": {
+          "package_name": "com.ismaelmoussaoui.startup_namer"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "820398325664-2vh86ub8bgh3nf5it2o97ca2qb8q37i2.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCRRahYPV4j2ueKWlLaEDa0DMsS1hbgClY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "820398325664-2vh86ub8bgh3nf5it2o97ca2qb8q37i2.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
