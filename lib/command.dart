@@ -1,29 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:animated_floatactionbuttons/animated_floatactionbuttons.dart';
 
-Widget float1()
-{
-  return Container(
-    child: FloatingActionButton(
-      heroTag: "fl2",
-      onPressed: null,
-      tooltip: 'FirstButton',
-      child: Icon(Icons.add),
-    ),
-  );
-}
-
-Widget float2()
-{
-  return Container(
-    child: FloatingActionButton(
-      heroTag: "fl1",
-      onPressed: null,
-      tooltip: 'Second',
-      child: Icon(Icons.add),
-    ),
-  );
-}
 
 class CommandRoute extends StatelessWidget
 {
@@ -31,7 +8,19 @@ class CommandRoute extends StatelessWidget
   Widget build(BuildContext context) {
     return Scaffold(
       body: Center(
-        child: Text("oui"),
+        child: Card(
+          child: Padding(
+            padding: EdgeInsets.only(top: 36.0, left: 6.0, right: 6.0, bottom: 6.0),
+            child: ExpansionTile(
+              title: Text('Naissance de l\'univers'),
+              children: <Widget>[
+                Text('Big Bang'),
+                Text('Birth of Sun'),
+                Text('Earth is Born')
+              ],
+            ),
+          ),
+        ),
       ),
     );
   }
