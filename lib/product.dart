@@ -199,44 +199,6 @@ class _MyStatefulWidgetState extends State<NewProduct>
     }
   }
 
-  Widget cameraTogglesRowWidget() {
-    final List<Widget> toggles = <Widget>[];
-
-    if (cameras != null) {
-      if (cameras.isEmpty) {
-        return const Text('No camera found');
-      } else {
-        for (CameraDescription cameraDescription in cameras) {
-          toggles.add(
-            SizedBox(
-              width: 90.0,
-              child: RadioListTile<CameraDescription>(
-                title: Icon(getCameraLensIcon(cameraDescription.lensDirection)),
-                groupValue: controller?.description,
-                value: cameraDescription,
-                onChanged: controller != null ? onNewCameraSelected : null,
-              ),
-            ),
-          );
-        }
-      }
-    }
-
-    return Row(children: toggles);
-  }
-
-  Widget cameraOptionsWidget() {
-    return Padding(
-      padding: const EdgeInsets.all(5.0),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.start,
-        children: <Widget>[
-          showCamera ? cameraTogglesRowWidget() : Container(),
-        ],
-      ),
-    );
-  }
-
   Widget ProductForms()
   {
     return Column(
@@ -408,7 +370,7 @@ class _MyStatefulWidgetState extends State<NewProduct>
                   child: Padding(
                     padding: const EdgeInsets.only(top: 5),
                     child: Center(child: cameraPreviewWidget()),
-                  ),
+                  ) ,
                 ) : Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: <Widget>[
@@ -417,7 +379,6 @@ class _MyStatefulWidgetState extends State<NewProduct>
                       ]),
                   ),
                   showCamera ? captureControlRowWidget() : Container(),
-                  cameraOptionsWidget(),
                   ProductForms()
         ])
     )));
