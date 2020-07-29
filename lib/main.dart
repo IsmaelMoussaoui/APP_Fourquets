@@ -52,7 +52,8 @@ Widget newProduct(context)
 }
 
 
-class FirstRoute extends StatelessWidget {
+class FirstRoute extends StatelessWidget
+{
   @override
   Widget build(BuildContext context) {
     return Scaffold(

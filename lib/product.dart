@@ -7,7 +7,8 @@ import 'package:path_provider/path_provider.dart';
 
 List<CameraDescription> cameras;
 
-IconData getCameraLensIcon(CameraLensDirection direction) {
+IconData getCameraLensIcon(CameraLensDirection direction)
+{
   switch (direction) {
     case CameraLensDirection.back:
       return Icons.camera_rear;
@@ -27,11 +28,11 @@ class NewProduct extends StatefulWidget
   get _pastry => false;
   get _sell   => false;
   @override
-  _MyStatefulWidgetState createState() => _MyStatefulWidgetState();
+  _NewProduct createState() => _NewProduct();
 }
 
 /// This is the private State class that goes with MyStatefulWidget.
-class _MyStatefulWidgetState extends State<NewProduct>
+class _NewProduct extends State<NewProduct>
 {
   final _formKey = GlobalKey<FormState>();
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
@@ -40,18 +41,41 @@ class _MyStatefulWidgetState extends State<NewProduct>
   bool isReady = false;
   bool showCamera = true;
   String imagePath;
-  // Inputs
+  String dropdownValue = 'Fournisseur1';
+
+  bool _bakery  = false;
+  bool _pastry  = false;
+  bool _sell    = false;
+
   TextEditingController nameController = TextEditingController();
   TextEditingController countryController = TextEditingController();
   TextEditingController abvController = TextEditingController();
 
+  String timestamp() => DateTime.now().millisecondsSinceEpoch.toString();
+
+  set setBakery(bool)
+  {
+    _bakery = bool;
+  }
+  set setPastry(bool)
+  {
+    _pastry = bool;
+  }
+  set setSell(bool)
+  {
+    _sell = bool;
+  }
+
+
   @override
-  void initState() {
+  void initState()
+  {
     super.initState();
     setupCameras();
   }
 
-  Future<void> setupCameras() async {
+  Future<void> setupCameras() async
+  {
     try {
       cameras = await availableCameras();
       controller = new CameraController(cameras[0], ResolutionPreset.medium);
@@ -66,7 +90,8 @@ class _MyStatefulWidgetState extends State<NewProduct>
     });
   }
 
-  Widget cameraPreviewWidget() {
+  Widget cameraPreviewWidget()
+  {
     if (!isReady || !controller.value.isInitialized) {
       return Container();
     }
@@ -75,9 +100,8 @@ class _MyStatefulWidgetState extends State<NewProduct>
         child: CameraPreview(controller));
   }
 
-  String timestamp() => DateTime.now().millisecondsSinceEpoch.toString();
-
-  Widget imagePreviewWidget() {
+  Widget imagePreviewWidget()
+  {
     return Container(
         child: Padding(
           padding: const EdgeInsets.only(top: 10),
@@ -92,22 +116,9 @@ class _MyStatefulWidgetState extends State<NewProduct>
           ),
         ));
   }
-  // ignore: non_constant_identifier_names
-  String dropdownValue = 'Fournisseur1';
-  bool _bakery  = false;
-  bool _pastry  = false;
-  bool _sell    = false;
-  set setBakery(bool){
-    _bakery = bool;
-  }
-  set setPastry(bool){
-    _pastry = bool;
-  }
-  set setSell(bool){
-    _sell = bool;
-  }
 
-  Widget editCaptureControlRowWidget() {
+  Widget editCaptureControlRowWidget()
+  {
     return Padding(
       padding: const EdgeInsets.only(top: 5),
       child: Align(
@@ -123,11 +134,13 @@ class _MyStatefulWidgetState extends State<NewProduct>
     );
   }
 
-  void showInSnackBar(String message) {
+  void showInSnackBar(String message)
+  {
     scaffoldKey.currentState.showSnackBar(SnackBar(content: Text(message)));
   }
 
-  Future<String> takePicture() async {
+  Future<String> takePicture() async
+  {
     if (!controller.value.isInitialized) {
       return null;
     }
@@ -148,7 +161,8 @@ class _MyStatefulWidgetState extends State<NewProduct>
     return filePath;
   }
 
-  void onTakePictureButtonPressed() {
+  void onTakePictureButtonPressed()
+  {
     takePicture().then((String filePath) {
       if (mounted) {
         setState(() {
@@ -159,7 +173,8 @@ class _MyStatefulWidgetState extends State<NewProduct>
     });
   }
 
-  Widget captureControlRowWidget() {
+  Widget captureControlRowWidget()
+  {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       mainAxisSize: MainAxisSize.max,
@@ -175,7 +190,8 @@ class _MyStatefulWidgetState extends State<NewProduct>
     );
   }
 
-  void onNewCameraSelected(CameraDescription cameraDescription) async {
+  void onNewCameraSelected(CameraDescription cameraDescription) async
+  {
     if (controller != null) {
       await controller.dispose();
     }
@@ -261,6 +277,7 @@ class _MyStatefulWidgetState extends State<NewProduct>
                   children: [
 
                     FilterChip(
+                      padding: EdgeInsets.all(10),
                       selected: _bakery,
                       label: Text('Boulangerie'),
                       labelStyle: TextStyle(color: Colors.white),
@@ -335,6 +352,7 @@ class _MyStatefulWidgetState extends State<NewProduct>
                 Padding(
                     padding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 35.0),
                     child: RaisedButton(
+                      color: Colors.green,
                       onPressed: () {
                         if (_formKey.currentState.validate()) {
                           // Process data.
