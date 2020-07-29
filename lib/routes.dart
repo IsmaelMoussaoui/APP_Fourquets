@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:animated_floatactionbuttons/animated_floatactionbuttons.dart';
 import 'package:startup_namer/product.dart';
 
 import 'Provider.dart';
@@ -55,8 +54,7 @@ class RateRoute extends StatelessWidget
       appBar: AppBar(
           title: Text('Tarifs')),
       body: Center(
-        child: Text("Listes des produits tarifé"),
-      ),
+                child: Text('Listes des produits tarifés'))
     );
   }
 }

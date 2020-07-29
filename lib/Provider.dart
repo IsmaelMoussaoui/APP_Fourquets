@@ -94,6 +94,8 @@ class _MyStatefulWidgetState extends State<NewProvider>
                         keyboardType: TextInputType.emailAddress,
                         validator: (mail){
                           _mail = mail;
+                          if(!EmailValidator.validate(mail))
+                            return 'Entrez un mail valide';
                           if (_mail.isEmpty)
                             return 'Remplissez le champ';
                           return null;
