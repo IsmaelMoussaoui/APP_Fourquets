@@ -1,0 +1,30 @@
+{
+  "prodInfo":
+  {
+    "products": [
+      {
+        "name": "Baguette",
+        "provider": "Ezdo",
+        "unitPrice": 0.18,
+        "number": 50,
+        "price": 9,
+        "unit": "Baguette",
+        "category": "Surgelé",
+        "subCategory": "pain",
+        "date": "12/09/2014"
+      },
+      {
+        "name": "Beurre cacao",
+        "provider": "Mesmacques",
+        "unitPrice": 10.93,
+        "number": 1,
+        "price": 10.93,
+        "unit": "kg",
+        "category": "Preparation",
+        "subCategory": "prepa-patisserie",
+        "date": "12/09/2014"
+      }
+
+    ]
+  }
+}

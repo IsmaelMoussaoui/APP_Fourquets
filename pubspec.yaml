@@ -31,13 +31,28 @@ dependencies:
     sdk: flutter
   animated_floatactionbuttons: ^0.1.0
   email_validator: ^1.0.0
-
-
+  dartson:
+  shared_preferences: ^0.5.3
+  flutter_bloc: ^3.2.0
+  sqflite: ^1.2.0
+  path: ^1.6.4
+  validators: any
+  image_picker: any
+  extended_image: any
+  intl: any
+  flutter_datetime_picker:
+  flutter_rounded_date_picker: 1.0.0
+  datetime_picker_formfield: any
+  rapido: any
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
   flutter_launcher_icons: "^0.7.3"
+  path_provider: any
+  camera:
+  path:
+  http: any
 
 
 flutter_icons:
@@ -49,6 +64,9 @@ flutter_icons:
 
 # The following section is specific to Flutter.
 flutter:
+
+  assets:
+    - info.json
 
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in
