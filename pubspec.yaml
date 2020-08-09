@@ -44,6 +44,7 @@ dependencies:
   flutter_rounded_date_picker: 1.0.0
   datetime_picker_formfield: any
   rapido: any
+  url_launcher: any
 
 dev_dependencies:
   flutter_test:
