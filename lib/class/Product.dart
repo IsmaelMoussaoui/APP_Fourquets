@@ -6,6 +6,8 @@ import 'package:async/async.dart';
 import 'dart:io';
 import 'dart:async';
 
+import 'package:startup_namer/routes/NewProduct.dart';
+
 
 class Product
 {
@@ -15,9 +17,9 @@ class Product
   String provider;
   String unit;
   DateTime addedDate;
-  int unitPrice;
+  String unitPrice;
   String post;
-  int globalPrice;
+  String globalPrice;
   /// End of the attributes.
 
   /// Constructor for Product class
@@ -65,7 +67,7 @@ class ProductDataBase
       onCreate: (Database db, int version) async {
         await db.execute("Create TABLE products(id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,"
             " name TEXT, provider TEXT, unit TEXT, addedDate TEXT,"
-            " unitPrice INTEGER, post TEXT, globalPrice INTEGER)");
+            " unitPrice TEXT, post TEXT, globalPrice TEXT)");
         }
       );
   }
@@ -122,79 +124,62 @@ class ProductRoute extends StatefulWidget
 }
 
 
-class _ProductRoute extends State<ProductRoute>
-{
-
+class _ProductRoute extends State<ProductRoute> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text("Produits")),
-      body: FutureBuilder<List<Product>>(
-        future: ProductDataBase.instance.fetchProduct(),
-        builder: (context, snapshot) {
-          if (snapshot.hasData) {
-            return ListView.builder(
-              itemCount: snapshot.data.length,
-              itemBuilder: (BuildContext context, index) {
-                return ListTile(
-                  title: Text(snapshot.data[index].name),
-                  subtitle: Text(snapshot.data[index].provider),
+        appBar: AppBar(title: Text("Produits")),
+        body: FutureBuilder<List<Product>>(
+            future: ProductDataBase.instance.fetchProduct(),
+            builder: (context, snapshot) {
+              if (snapshot.hasData) {
+                return ListView.builder(
+                  itemCount: snapshot.data.length,
+                  itemBuilder: (BuildContext context, index) {
+                    return Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: ExpansionTile(
+                          title: Text(snapshot.data[index].name),
+                          children: <Widget>[
+                            Text(snapshot.data[index].provider),
+                            Text(snapshot.data[index].unitPrice),
+                            RaisedButton(
+                                child: Text("Supprimer",
+                                  style: TextStyle(color: Colors.white),
+                                ),
+                                color: Colors.red,
+                                onPressed: () async {
+                                  ProductDataBase.instance.deleteProduct(
+                                      snapshot.data[index].id);
+                                  setState(() {});
+                                }),
+                            RaisedButton(
+                                child: Text("Modifier",
+                                    style: TextStyle(color: Colors.white)),
+                                color: Colors.green,
+                                onPressed: () async {
+                                  _navigateToDetail(context, snapshot.data[index]);
+                                  setState(() {});
+                                }),
+                            //  Text(snapshot.data[index].globalPrice.toString()),
+                          ]
+                      ),
+                    );
+                  },
                 );
-              },
-            );
-          } else if (snapshot.hasError)
-            return Text("Fail");
-          return CircularProgressIndicator();
-          }
-      )
+              } else if (snapshot.hasError)
+                return Text("Fail");
+              return CircularProgressIndicator();
+            }
+        )
     );
   }
 
-    /*return Scaffold(
-      appBar: AppBar(
-        title: Text("Liste des produits")),
-      body: Container(
-        child: ListView.builder(
-          itemCount: ,
-        ),
-      ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-      floatingActionButton: FloatingActionButton(
-        onPressed: (){Navigator.pushNamed(context, '/NewProduct');},
-        tooltip: "Nouveau produit",
-        child: Icon(Icons.add),
-        elevation: 10),
-      bottomNavigationBar:
-      Container(
-        height: 60,
-        child: BottomAppBar(
-          child: new Row(
-            mainAxisSize: MainAxisSize.max,
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: <Widget>[
-              IconButton(
-                icon: Icon(Icons.edit),
-                color: Colors.white,
-                onPressed: () {},
-              iconSize: 30),
-              IconButton(
-                icon: Icon(Icons.search),
-                color: Colors.white,
-                onPressed: () {},
-                iconSize: 30,
-                tooltip: "Rechercher",),
-              IconButton(
-                icon: Icon(Icons.delete),
-                color: Colors.white,
-                onPressed: () {},
-                iconSize: 30,
-                tooltip: "Supprimer"),
-            ],
-          ),
-          shape: CircularNotchedRectangle(),
-          color: Colors.blueGrey,
-        ),
-      ),
+  _navigateToDetail(BuildContext context, Product product) async {
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => NewProduct(product: product)),
     );
-  }*/
+    setState(() {});
+  }
 }
