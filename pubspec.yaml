@@ -32,7 +32,7 @@ dependencies:
   animated_floatactionbuttons: ^0.1.0
   email_validator: ^1.0.0
   dartson:
-  shared_preferences: ^0.5.3
+  shared_preferences: ^0.5.4+8
   flutter_bloc: ^3.2.0
   sqflite: ^1.2.0
   path: ^1.6.4
@@ -45,6 +45,8 @@ dependencies:
   datetime_picker_formfield: any
   rapido: any
   url_launcher: any
+  syncfusion_flutter_pdf: ^18.1.42-beta
+  open_file: ^3.0.1
 
 dev_dependencies:
   flutter_test:
@@ -52,12 +54,9 @@ dev_dependencies:
   flutter_launcher_icons: "^0.7.3"
   path_provider: any
   camera:
-  path:
-  http: any
-
 
 flutter_icons:
-  android: "launcher_icon"
+  android: true
   ios: true
   image_path: "assets/icon/icon.png"
 # For information on the generic Dart part of this file, see the
@@ -68,6 +67,7 @@ flutter:
 
   assets:
     - info.json
+    - assets/logo_Boulangerie.jpeg
 
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in

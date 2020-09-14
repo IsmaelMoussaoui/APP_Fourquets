@@ -1,6 +1,7 @@
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
-import 'package:startup_namer/class/Provider.dart';
+import 'package:startup_namer/core/models/Provider.dart';
+import 'package:startup_namer/database/ProviderDataBase.dart';
 
 class NewProvider extends StatefulWidget
 {
@@ -68,7 +69,7 @@ class _CreateNewProvider extends State<NewProvider>
                     controller: societyNameController,
                     validator: (value) {
                       if (value.isEmpty)
-                        return 'Entrez le nom de la societe';
+                        return 'Entrez le nom de la société';
                       return null;
                     }
                 ),
@@ -91,7 +92,9 @@ class _CreateNewProvider extends State<NewProvider>
                   keyboardType: TextInputType.emailAddress,
                   validator: (value) {
                     if (value.isEmpty)
-                      return 'Entrez l\'adresse mail du fournisseur';
+                      return 'Entrez l\'adresse-mail du fournisseur';
+                    else if (!EmailValidator.validate(value))
+                      return "Entrez une adresse-mail valide";
                     return null;
                   }
                 ),
@@ -100,7 +103,7 @@ class _CreateNewProvider extends State<NewProvider>
                       icon: Icon(Icons.phone),
                       labelText: "Numéro de telephone"),
                   controller: numberPhoneController,
-                  keyboardType: TextInputType.number,
+                  keyboardType: TextInputType.phone,
                   validator: (value){
                     if (value.isEmpty)
                       return "Entrez le numéro de téléphone";
@@ -116,7 +119,7 @@ class _CreateNewProvider extends State<NewProvider>
                             child: Icon(Icons.check),
                             onPressed: () async {
                               if (!_formKey.currentState.validate())
-                                Scaffold.of(context).showSnackBar(SnackBar(content: Text("Renseignez les champs manquant")));
+                                Scaffold.of(context).showSnackBar(SnackBar(content: Text("Renseignez les champs manquants")));
                             _saveProvider(
                               nameTextController.text,
                               societyNameController.text,

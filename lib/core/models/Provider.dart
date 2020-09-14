@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:path/path.dart';
-import 'package:sqflite/sqflite.dart';
+import 'package:startup_namer/database/ProviderDataBase.dart';
+import 'package:startup_namer/routes/FiltredByProvider.dart';
 import 'package:startup_namer/routes/NewProvider.dart';
 import 'package:url_launcher/url_launcher.dart';
+
+import 'Product.dart';
 
 
 class Provider
@@ -29,81 +31,6 @@ class Provider
       "societyName": societyName,
     };
   }
-}
-
-class ProviderDataBase
-{
-  ProviderDataBase._();
-
-  static const databaseName = "databas.db";
-  static final ProviderDataBase instance = ProviderDataBase._();
-  static Database _database;
-
-  Future<Database> get database async
-  {
-    print("1");
-    if (_database == null) {
-      print("3");
-      return await initDB();
-    } else {
-      print("2");
-      return await initDB();
-    }
-  }
-
-  initDB() async
-  {
-    return await openDatabase(
-      join(await getDatabasesPath(), databaseName),
-      version: 1,
-      onCreate: (Database db, int version) async {
-        print("oui");
-        await db.execute("CREATE TABLE providers(id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,"
-                " name TEXT, addressMail TEXT, numberPhone TEXT, societyName TEXT)");
-        }
-    );
-  }
-
-  insertProvider(Provider provider) async
-  {
-    final db = await database;
-    var res  = await db.insert("providers", provider.toMap(), conflictAlgorithm:  ConflictAlgorithm.replace);
-
-    return res;
-  }
-
-  Future<List<Provider>> fetchProvider() async
-  {
-    final db = await database;
-    final List<Map<String, dynamic>> maps = await db.query("providers");
-
-    return List.generate(maps.length, (i){
-      return Provider(
-        id: maps[i]['id'],
-        name: maps[i]['name'],
-        addressMail: maps[i]['addressMail'],
-        numberPhone: maps[i]['numberPhone'],
-        societyName: maps[i]['societyName'],
-        );
-      });
-  }
-
-  updateProvider(Provider provider) async
-  {
-    final db = await database;
-
-    await db.update("providers", provider.toMap(),
-      where: 'id = ?',
-      whereArgs: [provider.id],
-      conflictAlgorithm: ConflictAlgorithm.replace);
-  }
-
-  deleteProvider(int id) async
-  {
-    var db = await database;
-    db.delete('providers', where: 'id = ?', whereArgs: [id]);
-  }
-
 }
 
 class ProviderRoute extends StatefulWidget
@@ -133,6 +60,14 @@ class _ProviderRoute extends State<ProviderRoute>
                             Text(snapshot.data[index].name),
                             Text(snapshot.data[index].addressMail),
                             Text(snapshot.data[index].numberPhone),
+                            RaisedButton.icon(
+                                onPressed: () async {
+                                  _navigateToProvider(context, snapshot.data[index].societyName);
+                                },
+                                color: Colors.teal,
+                                icon: Icon(Icons.list, color: Colors.white),
+                                label: Text("Liste des produits de " + snapshot.data[index].societyName,
+                                  style: TextStyle(color: Colors.white),)),
                             Row(
                               mainAxisSize: MainAxisSize.max,
                               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -141,8 +76,7 @@ class _ProviderRoute extends State<ProviderRoute>
                                 RaisedButton.icon(
                                   icon: Icon(Icons.delete, color: Colors.white),
                                   label: Text("Supprimer",
-                                    style: TextStyle(color: Colors.white),
-                                  ),
+                                    style: TextStyle(color: Colors.white)),
                                   color: Colors.red,
                                   onPressed: () async {
                                     ProviderDataBase.instance.deleteProvider(
@@ -170,11 +104,10 @@ class _ProviderRoute extends State<ProviderRoute>
                   },
                 );
               } else if (snapshot.hasError) {
-                print(snapshot.error);
-                return Text("Fail");
-              } else if(!snapshot.hasData){
+                  print(snapshot.error);
+                  return Text(snapshot.error);
+              } else if (!snapshot.hasData)
                 return Center(child: Text("Il n'y a aucun fournisseur pour le moment"));
-              }
               return CircularProgressIndicator();
             }
         )
@@ -188,4 +121,11 @@ class _ProviderRoute extends State<ProviderRoute>
     );
     setState(() {});
   }
+
+  _navigateToProvider(BuildContext context, String provider) async
+  {
+    Navigator.push(context, MaterialPageRoute(builder: (context) => FiltredByProvider(provider: provider)));
+    setState(() {});
+  }
+
 }

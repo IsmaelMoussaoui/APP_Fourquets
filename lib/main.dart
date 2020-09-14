@@ -1,7 +1,8 @@
-import 'package:startup_namer/class/Provider.dart';
+import 'package:startup_namer/core/models/Provider.dart';
 import 'package:startup_namer/routes/NewProduct.dart';
 import 'package:startup_namer/routes/NewProvider.dart';
-import 'class/Product.dart';
+import 'package:startup_namer/views/ProductView.dart';
+import 'core/models/Product.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
